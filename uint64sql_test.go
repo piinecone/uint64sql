@@ -2,7 +2,6 @@ package uint64sql
 
 import (
 	"database/sql/driver"
-	// "math"
 	"testing"
 )
 
@@ -40,6 +39,36 @@ func TestUint64Sql_Scan(t *testing.T) {
 	if err != nil {
 		// Scan failed... no need to test result value
 		t.Errorf("a.Scan(1234567890) failed with message: %s", err)
+
+	} else {
+		// Scan succeeded... test resulting values
+		if a.value != expected.value {
+			t.Errorf("%s does not equal to %s", a, expected)
+		}
+	}
+
+	dbInt64 := int64(7241575154197211182)
+	expected = New(7241575154197211182)
+
+	err = a.Scan(dbInt64)
+	if err != nil {
+		// Scan failed... no need to test result value
+		t.Errorf("a.Scan(7241575154197211182) failed with message: %s", err)
+
+	} else {
+		// Scan succeeded... test resulting values
+		if a.value != expected.value {
+			t.Errorf("%s does not equal to %s", a, expected)
+		}
+	}
+
+	dbStr := string("12")
+	expected = New(12)
+
+	err = a.Scan(dbStr)
+	if err != nil {
+		// Scan failed... no need to test result value
+		t.Errorf("a.Scan(12) failed with message: %s", err)
 
 	} else {
 		// Scan succeeded... test resulting values
